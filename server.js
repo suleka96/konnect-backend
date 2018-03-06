@@ -20,9 +20,9 @@ app.get('/', (req, res) => res.render('pages/index'));
 console.log("hii");
 
 app.post('/register', jsonParser, function(req, res) {
+    console.log("hii");
     if (!req.body) return res.sendStatus(400);
     var registerInfo = req.body;
-    console.log(registerInfo);
-    console.log("hii");
+    console.log(registerInfo);    
 });
 
