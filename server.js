@@ -13,7 +13,7 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 // create application/json parser
 var jsonParser = bodyParser.json();
-
+//happy
 //Index route
 app.get('/', (req, res) => res.render('pages/index'));
 
