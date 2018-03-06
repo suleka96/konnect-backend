@@ -23,5 +23,6 @@ app.post('/register', jsonParser, function(req, res) {
     if (!req.body) return res.sendStatus(400);
     var registerInfo = req.body;
     console.log(registerInfo);
+    console.log("hii");
 });
 
