@@ -3,6 +3,9 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+var cors = require('cors');
+
+app.use(cors());
 
 const app = express();
 
@@ -14,13 +17,16 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 // create application/json parser
 var jsonParser = bodyParser.json();
 
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 //Index route
 app.get('/', (req, res) => res.render('pages/index'));
 
 console.log("hii");
 
 app.post('/register', jsonParser, function(req, res) {
-    console.log("hii");
+    console.log("inside register route");
     if (!req.body) return res.sendStatus(400);
     var registerInfo = req.body;
     console.log(registerInfo);    
