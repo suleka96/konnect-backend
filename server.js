@@ -5,10 +5,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 var cors = require('cors');
 
-app.use(cors());
-
 const app = express();
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public'))); //Define where to look for static assets
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); //Define view engine as EJS
