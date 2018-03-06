@@ -17,6 +17,8 @@ var jsonParser = bodyParser.json();
 //Index route
 app.get('/', (req, res) => res.render('pages/index'));
 
+console.log("hii");
+
 app.post('/register', jsonParser, function(req, res) {
     if (!req.body) return res.sendStatus(400);
     var registerInfo = req.body;
