@@ -39,6 +39,3 @@ app.post('/login', jsonParser, function(req, res) {
     res.sendStatus(200).send(req.body);
     console.log(loginInfo);    
 });
-
-
-
