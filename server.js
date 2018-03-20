@@ -1,23 +1,59 @@
+/*
+******************************************************* 
+* IMPORT DEPENDENCIES
+*******************************************************
+*/
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-var cors = require('cors');
+//var cors = require('cors');
 
-const PORT = process.env.PORT || 5000;
+/*******************************************************************************************************************************/
+
+/*
+******************************************************* 
+* SET PORT
+*******************************************************
+*/
+
+const PORT = process.env.PORT || 5000; //Port is assigned at runtime by Heroku or 5000 by default
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`)); 
+
+/*******************************************************************************************************************************/
+
+/*
+******************************************************* 
+* INITIALIZE EXPRESS AND DEFINE PATHS
+*******************************************************
+*/
 
 const app = express();
 
-app.use(cors());
 app.use(express.static(path.join(__dirname, 'public'))); //Define path for static assets
-
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); //Define path for views
 app.set('view engine', 'ejs'); //Define view engine as EJS
+//app.use(cors());
 
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`)); 
+/*******************************************************************************************************************************/
 
-let URI = 'mongodb://heroku_24qgfjxh:5u7so4mv67fq7ahpjvcpacddgg@ds119489.mlab.com:19489/heroku_24qgfjxh';
+/*
+******************************************************* 
+* CONNECTION TO DATABASE
+*******************************************************
+*/
+
+let URI = 'mongodb://heroku_24qgfjxh:5u7so4mv67fq7ahpjvcpacddgg@ds119489.mlab.com:19489/heroku_24qgfjxh'; //mLab Connection URI
 mongoose.connect(URI); //Connecting to mLab Database
+
+/*******************************************************************************************************************************/
+
+/*
+******************************************************* 
+* DEFINE SCHEMAS FOR COLLECTIONS
+*******************************************************
+*/
 
 var Schema = mongoose.Schema; 
 
@@ -29,7 +65,7 @@ var usersSchema = new Schema({
 });
 
 var profilesSchema = new Schema({
-    
+
 });
 
 var requestsSchema = new Schema({
@@ -39,6 +75,14 @@ var requestsSchema = new Schema({
 var receivedProfilesSchema = new Schema({
 
 });
+
+/*******************************************************************************************************************************/
+
+/*
+******************************************************* 
+* DEFINE ROUTES
+*******************************************************
+*/
 
 //Create application/json parser
 var jsonParser = bodyParser.json();
@@ -66,3 +110,5 @@ app.post('/login', jsonParser, function(req, res) {
     res.sendStatus(200).send(req.body);
     console.log(loginInfo);    
 });
+
+/*******************************************************************************************************************************/
