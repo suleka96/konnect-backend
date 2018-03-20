@@ -1,17 +1,41 @@
 const express = require('express');
 const path = require('path');
-const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 var cors = require('cors');
+
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public'))); //Define path for static assets
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); //Define view engine as EJS
+
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`)); 
+
+let URI = 'mongodb://heroku_24qgfjxh:5u7so4mv67fq7ahpjvcpacddgg@ds119489.mlab.com:19489/heroku_24qgfjxh';
+mongoose.connect(URI); //Connecting to mLab Database
+
+var Schema = mongoose.Schema; 
+
+var usersSchema = new Schema({
+
+});
+
+var profilesSchema = new Schema({
+
+});
+
+var requestsSchema = new Schema({
+
+});
+
+var receivedProfilesSchema = new Schema({
+
+});
 
 //Create application/json parser
 var jsonParser = bodyParser.json();
