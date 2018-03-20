@@ -22,11 +22,14 @@ mongoose.connect(URI); //Connecting to mLab Database
 var Schema = mongoose.Schema; 
 
 var usersSchema = new Schema({
-
+    userId: String,    
+    fName: String,
+    lName: String,
+    bio: String
 });
 
 var profilesSchema = new Schema({
-
+    
 });
 
 var requestsSchema = new Schema({
