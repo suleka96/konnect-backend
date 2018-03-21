@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 
 /*******************************************************************************************************************************/
 
+const app = express();
+
 /*
 ******************************************************* 
 * SET PORT
@@ -25,11 +27,9 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 /*
 ******************************************************* 
-* INITIALIZE EXPRESS AND DEFINE PATHS
+* DEFINE PATHS
 *******************************************************
 */
-
-const app = express();
 
 app.use(express.static(path.join(__dirname, 'public'))); //Define path for static assets
 app.set('views', path.join(__dirname, 'views')); //Define path for views
