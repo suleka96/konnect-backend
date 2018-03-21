@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 
 /*******************************************************************************************************************************/
 
+const app = express();
+
 /*
 ******************************************************* 
 * SET PORT
@@ -25,11 +27,9 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 /*
 ******************************************************* 
-* INITIALIZE EXPRESS AND DEFINE PATHS
+* DEFINE PATHS
 *******************************************************
 */
-
-const app = express();
 
 app.use(express.static(path.join(__dirname, 'public'))); //Define path for static assets
 app.set('views', path.join(__dirname, 'views')); //Define path for views
@@ -57,23 +57,45 @@ mongoose.connect(URI); //Connecting to mLab Database
 
 var Schema = mongoose.Schema; 
 
+var profilesSchema = new Schema({
+    profileId: String,    
+    mobileNo: String,
+    dateOfBirth: Date,
+    homeAddress: String,
+    links: {
+        facebookURL: String,
+        twitterURL: String,
+        linkedinURL: String,
+        blogURL: String
+    },
+    work: {
+        companyName: String,
+        companyWebsite: String,
+        workAddress: String,
+        workEmail: String,
+        designation: String
+    }
+});
+
+var requestsSchema = new Schema({
+    requesterUserId: String,    
+    receivedProfileId: String
+});
+
+var receivedProfilesSchema = new Schema({
+    receivedProfileId: String,
+    connectionId: String //connectionId is the requesterId but after the connection has been approved by the user.
+});
+
 var usersSchema = new Schema({
     userId: String,    
     fName: String,
     lName: String,
-    bio: String
-});
-
-var profilesSchema = new Schema({
-
-});
-
-var requestsSchema = new Schema({
-
-});
-
-var receivedProfilesSchema = new Schema({
-
+    bio: String,
+    profilePic: String,
+    profiles: [profilesSchema],
+    requests: [requestsSchema],
+    receivedProfiles: [receivedProfilesSchema]
 });
 
 /*******************************************************************************************************************************/
