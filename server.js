@@ -61,19 +61,41 @@ var usersSchema = new Schema({
     userId: String,    
     fName: String,
     lName: String,
-    bio: String
+    bio: String,
+    profilePic: String,
+    profiles: [profilesSchema],
+    requests: [requestsSchema],
+    receivedProfiles: [receivedProfilesSchema]
 });
 
 var profilesSchema = new Schema({
-
+    profileId: String,    
+    mobileNo: String,
+    dateOfBirth: Date,
+    homeAddress: String,
+    links: {
+        facebookURL: String,
+        twitterURL: String,
+        linkedinURL: String,
+        blogURL: String
+    },
+    work: {
+        companyName: String,
+        companyWebsite: String,
+        workAddress: String,
+        workEmail: String,
+        designation: String
+    }
 });
 
 var requestsSchema = new Schema({
-
+    requesterUserId: String,    
+    receivedProfileId: String
 });
 
 var receivedProfilesSchema = new Schema({
-
+    receivedProfileId: String,
+    connectionId: String //connectionId is the requesterId but after the connection has been approved by the user.
 });
 
 /*******************************************************************************************************************************/
