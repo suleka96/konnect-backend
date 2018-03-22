@@ -162,6 +162,7 @@ var profile2 = new Profile({
 //user1.profiles.push(profile1);
 
 User.findOne({fName: 'Raneesh'}).then(function(record) {
+    console.log(record);
     record.profiles.push(profile2);
 });
 
