@@ -101,10 +101,7 @@ var usersSchema = new Schema({
 
 var Profile = mongoose.model("profiles", profilesSchema);
 var Request = mongoose.model("requests", requestsSchema);
-var ReceivedProfile = mongoose.model(
-  "receivedProfiles",
-  receivedProfilesSchema
-);
+var ReceivedProfile = mongoose.model("receivedProfiles", receivedProfilesSchema);
 var User = mongoose.model("users", usersSchema);
 
 var user1 = new User({
@@ -119,13 +116,13 @@ var user1 = new User({
 });
 
 user1.save(function(err) {
-  if (err) console.log("Database Error: " + err);
+    if (err) console.log('Database Error: ' + err);
 });
 
 var profile1 = new Profile({
   profileId: "profile123",
   mobileNo: "07777777777",
-  dateOfBirth: new Date(),
+  dateOfBirth: new Date,
   homeAddress: "478/35 aluthmawatha",
   links: {
     facebookURL: "facebook",
@@ -142,25 +139,8 @@ var profile1 = new Profile({
   }
 });
 
-user1.profiles.push({
-  profileId: "profile123",
-  mobileNo: "07777777777",
-  dateOfBirth: new Date(),
-  homeAddress: "478/35 aluthmawatha",
-  links: {
-    facebookURL: "facebook",
-    twitterURL: "twitter",
-    linkedinURL: "linkedin",
-    blogURL: "blog"
-  },
-  work: {
-    companyName: "some company",
-    companyWebsite: "www.company.com",
-    workAddress: "23/4 company road, colombo",
-    workEmail: "company@company.com",
-    designation: "companist"
-  }
-});
+user1.profiles.push(profile1);
+
 
 /*******************************************************************************************************************************/
 
