@@ -119,25 +119,27 @@ user1.save(function(err) {
     if (err) console.log('Database Error: ' + err);
 });
 
-// var profile1 = new Profile({
-//   profileId: String,
-//   mobileNo: String,
-//   dateOfBirth: Date,
-//   homeAddress: String,
-//   links: {
-//     facebookURL: String,
-//     twitterURL: String,
-//     linkedinURL: String,
-//     blogURL: String
-//   },
-//   work: {
-//     companyName: String,
-//     companyWebsite: String,
-//     workAddress: String,
-//     workEmail: String,
-//     designation: String
-//   }
-// });
+var profile1 = new Profile({
+  profileId: "profile123",
+  mobileNo: "07777777777",
+  dateOfBirth: new Date,
+  homeAddress: "478/35 aluthmawatha",
+  links: {
+    facebookURL: "facebook",
+    twitterURL: "twitter",
+    linkedinURL: "linkedin",
+    blogURL: "blog"
+  },
+  work: {
+    companyName: "some company",
+    companyWebsite: "www.company.com",
+    workAddress: "23/4 company road, colombo",
+    workEmail: "company@company.com",
+    designation: "companist"
+  }
+});
+
+user1.profiles.push(profile1);
 
 /*******************************************************************************************************************************/
 
