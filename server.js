@@ -139,7 +139,28 @@ var profile1 = new Profile({
   }
 });
 
+var profile2 = new Profile({
+    profileId: "profile456",
+    mobileNo: "08888888888",
+    dateOfBirth: new Date,
+    homeAddress: "478/35 suleka road",
+    links: {
+      facebookURL: "facebook",
+      twitterURL: "twitter",
+      linkedinURL: "linkedin",
+      blogURL: "blog"
+    },
+    work: {
+      companyName: "some company",
+      companyWebsite: "www.company.com",
+      workAddress: "23/4 company road, colombo",
+      workEmail: "company@company.com",
+      designation: "companist"
+    }
+  });
+
 user1.profiles.push(profile1);
+user1.profiles.push(profile2);
 
 
 /*******************************************************************************************************************************/
