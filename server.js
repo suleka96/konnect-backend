@@ -133,4 +133,14 @@ app.post('/login', jsonParser, function(req, res) {
     console.log(loginInfo);    
 });
 
+app.post('/login', jsonParser, function(req, res) {
+    console.log("inside login route");
+    if (!req.body) return res.sendStatus(400);
+    var loginInfo = req.body;
+    res.sendStatus(200).send(req.body);
+    console.log(loginInfo);    
+});
+
+
+
 /*******************************************************************************************************************************/
