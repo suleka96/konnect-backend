@@ -104,40 +104,40 @@ var Request = mongoose.model("requests", requestsSchema);
 var ReceivedProfile = mongoose.model("receivedProfiles", receivedProfilesSchema);
 var User = mongoose.model("users", usersSchema);
 
-var user1 = new User({
-  userId: "konnect123",
-  fName: "Raneesh",
-  lName: "Gomez",
-  bio: "Bla bla bla",
-  profilePic: "base64",
-  profiles: [],
-  requests: [],
-  receivedProfiles: []
-});
+// var user1 = new User({
+//   userId: "konnect123",
+//   fName: "Raneesh",
+//   lName: "Gomez",
+//   bio: "Bla bla bla",
+//   profilePic: "base64",
+//   profiles: [],
+//   requests: [],
+//   receivedProfiles: []
+// });
 
-user1.save(function(err) {
-    if (err) console.log('Database Error: ' + err);
-});
+// user1.save(function(err) {
+//     if (err) console.log('Database Error: ' + err);
+// });
 
-var profile1 = new Profile({
-  profileId: "profile123",
-  mobileNo: "07777777777",
-  dateOfBirth: new Date,
-  homeAddress: "478/35 aluthmawatha",
-  links: {
-    facebookURL: "facebook",
-    twitterURL: "twitter",
-    linkedinURL: "linkedin",
-    blogURL: "blog"
-  },
-  work: {
-    companyName: "some company",
-    companyWebsite: "www.company.com",
-    workAddress: "23/4 company road, colombo",
-    workEmail: "company@company.com",
-    designation: "companist"
-  }
-});
+// var profile1 = new Profile({
+//   profileId: "profile123",
+//   mobileNo: "07777777777",
+//   dateOfBirth: new Date,
+//   homeAddress: "478/35 aluthmawatha",
+//   links: {
+//     facebookURL: "facebook",
+//     twitterURL: "twitter",
+//     linkedinURL: "linkedin",
+//     blogURL: "blog"
+//   },
+//   work: {
+//     companyName: "some company",
+//     companyWebsite: "www.company.com",
+//     workAddress: "23/4 company road, colombo",
+//     workEmail: "company@company.com",
+//     designation: "companist"
+//   }
+// });
 
 var profile2 = new Profile({
     profileId: "profile456",
@@ -159,8 +159,11 @@ var profile2 = new Profile({
     }
   });
 
-user1.profiles.push(profile1);
-user1.profiles.push(profile2);
+//user1.profiles.push(profile1);
+
+User.findOne({fName: 'Raneesh'}).then(function(record) {
+    record.profiles.push(profile2);
+});
 
 
 /*******************************************************************************************************************************/
