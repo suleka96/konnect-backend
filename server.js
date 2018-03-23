@@ -76,6 +76,7 @@ var Schema = mongoose.Schema;
 
 var profilesSchema = new Schema({
   profileId: String,
+  profileName: String,
   mobileNo: String,
   dateOfBirth: Date,
   homeAddress: String,
@@ -125,7 +126,7 @@ var Request = mongoose.model("requests", requestsSchema);
 var ReceivedProfile = mongoose.model("receivedProfiles", receivedProfilesSchema);
 var User = mongoose.model("users", usersSchema);
 
-// var user1 = new User({
+//var user1 = new User({
 //   userId: "konnect123",
 //   fName: "Raneesh",
 //   lName: "Gomez",
@@ -159,34 +160,6 @@ var User = mongoose.model("users", usersSchema);
 //     designation: "companist"
 //   }
 // });
-
-var profile2 = new Profile({
-  profileId: "profile456",
-  mobileNo: "08888888888",
-  dateOfBirth: new Date(),
-  homeAddress: "478/35 suleka road",
-  links: {
-    facebookURL: "facebook",
-    twitterURL: "twitter",
-    linkedinURL: "linkedin",
-    blogURL: "blog"
-  },
-  work: {
-    companyName: "some company",
-    companyWebsite: "www.company.com",
-    workAddress: "23/4 company road, colombo",
-    workEmail: "company@company.com",
-    designation: "companist"
-  }
-});
-
-//user1.profiles.push(profile1);
-
-User.findOne({ fName: "Raneesh" }).then(function(record) {
-  console.log(record);
-  record.profiles.push(profile2);
-  record.save();
-});
 
 /*******************************************************************************************************************************/
 
@@ -244,5 +217,67 @@ app.post("/login", jsonParser, function(req, res) {
 
   res.sendStatus(200).send(req.body);
 });
+
+//POST request handler for storing requests
+app.post("/storeRequest", jsonParser, function(req, res) {
+    console.log("inside login route");
+    if (!req.body) return res.sendStatus(400);
+    var loginInfo = req.body;
+    res.sendStatus(200).send(req.body);
+    console.log(loginInfo);
+  });
+
+
+//POST request handler for creating profiles
+app.post("/createprofile", jsonParser, function(req, res) {
+    console.log("inside createProfile route");
+
+    if (!req.body){
+        return res.sendStatus(400);
+    } 
+
+    else{
+
+        //get profile id from auth token
+
+        var profile = new Profile({
+            profileId: "auth token extract id",
+            profileName: req.body.profileName,
+            mobileNo: req.body.mobileNo,
+            dateOfBirth:  req.body.dateOfBirth,
+            homeAddress: req.body.homeAddress,
+            links: {
+            facebookURL: req.body.facebookURL,
+            twitterURL: req.body.twitterURL,
+            linkedinURL: req.body.linkedinURL,
+            blogURL:  req.body.blogURL
+            },
+            work: {
+            companyName: req.body.companyName,
+            companyWebsite: req.body.companyWebsite,
+            workAddress: req.body.workAddress,
+            workEmail: req.body.workEmail,
+            designation: req.body.designation
+            }
+        });
+        
+        User.findOne({fName: 'Raneesh'}).then(function(record) {
+            record.profiles.push(profile);
+            record.save();
+        });
+
+        res.sendStatus(200).send(req.body);
+        // console.log(loginInfo);
+    }
+});
+
+//POST request handler for storing requests
+app.post("/storerequest", jsonParser, function(req, res) {
+    console.log("inside storeRequest route");
+    if (!req.body) return res.sendStatus(400);
+    var loginInfo = req.body;
+    res.sendStatus(200).send(req.body);
+    console.log(loginInfo);
+  });
 
 /*******************************************************************************************************************************/
