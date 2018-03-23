@@ -225,7 +225,7 @@ app.post("/login", function(req, res) {
       console.log("Could not resolve Login ID Token from Client!");
   });
 
-  res.sendStatus(200).send(loginInfo);
+  res.sendStatus(200).json("Hello, " + displayName + "with UUID: " + uid);
 });
 
 //POST request handler for storing requests
