@@ -177,7 +177,7 @@ app.get("/", (req, res) => res.render("pages/index"));
 
 //Test POST request handler
 app.post("/test", function(req, res) {
-    res.json("Got your message, Dillon!")
+    res.send("Got your message, Dillon!")
     console.log(req.body);
 });
 
