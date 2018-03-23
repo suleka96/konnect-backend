@@ -169,15 +169,23 @@ var ConnectedUsers = mongoose.model("connectedUsers", connectedUsersSchema);
 *******************************************************
 */
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
+
+/*******************************************************************************************************************************/
+
+/*
+******************************************************* 
+* DEFINE ROUTES
+*******************************************************
+*/
 
 //GET request handler for index route
 app.get("/", (req, res) => res.render("pages/index"));
 
 //Test POST request handler
 app.post("/test", function(req, res) {
-    res.send("Got your message, Dillon!")
+    res.json("Got your message, Dillon!");
     console.log(req.body);
 });
 
@@ -195,13 +203,12 @@ app.post("/register", function(req, res) {
     })
     .then(function(userRecord) {
       // See the UserRecord reference doc for the contents of userRecord.
-      console.log("Successfully created new user:", userRecord.displayName);
+      console.log("Successfully created new user:", userRecord.displayName);      
+      res.json(registerInfo);
     })
     .catch(function(error) {
       console.log("Error creating new user:", error);
-    });
-
-  res.sendStatus(200).send(req.body);  
+    });   
 });
 
 //POST request handler for login button
@@ -210,13 +217,13 @@ app.post("/login", function(req, res) {
   if (!req.body) return res.sendStatus(400);
   var loginInfo = req.body;
 
-//   admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
-//       var uid = decodedToken.uid;
-//       var displayName = decodedToken.displayName;
-//     })
-//     .catch(function(error) {
-//       console.log("Could not resolve Login ID Token from Client!");
-//     });
+  admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      var displayName = decodedToken.displayName;
+    })
+    .catch(function(error) {
+      console.log("Could not resolve Login ID Token from Client!");
+  });
 
   res.sendStatus(200).send(loginInfo);
 });
@@ -238,9 +245,8 @@ app.post("/createprofile", function(req, res) {
 
     if (!req.body){
         return res.sendStatus(400);
-    } 
-
-    else{
+    }
+    else {
         var uid;
         var displayName;
 
