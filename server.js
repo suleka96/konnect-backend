@@ -8,11 +8,27 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const admin = require("firebase-admin");
+const serviceAccount = require("./admin/konnect-ionic-auth-firebase-adminsdk-s951b-aabc7ba7c0.json");
+
 //var cors = require('cors');
 
 /*******************************************************************************************************************************/
 
+/*
+******************************************************* 
+* INITIALIZE EXPRESS AND FIREBASE ADMIN SDK
+*******************************************************
+*/
+
 const app = express();
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://konnect-ionic-auth.firebaseio.com"
+});
+
+/*******************************************************************************************************************************/
 
 /*
 ******************************************************* 
@@ -98,11 +114,14 @@ var usersSchema = new Schema({
   profiles: [profilesSchema],
   requests: [requestsSchema],
   receivedProfiles: [receivedProfilesSchema]
-});
+});j
 
 var Profile = mongoose.model("profiles", profilesSchema);
 var Request = mongoose.model("requests", requestsSchema);
-var ReceivedProfile = mongoose.model("receivedProfiles", receivedProfilesSchema);
+var ReceivedProfile = mongoose.model(
+  "receivedProfiles",
+  receivedProfilesSchema
+);
 var User = mongoose.model("users", usersSchema);
 
 //var user1 = new User({
@@ -141,8 +160,6 @@ var User = mongoose.model("users", usersSchema);
 // });
 
 
-
-
 /*******************************************************************************************************************************/
 
 /*
@@ -162,20 +179,42 @@ app.get("/", (req, res) => res.render("pages/index"));
 
 //POST request handler for register route
 app.post("/register", jsonParser, function(req, res) {
-  console.log("inside register route");
+  console.log("Registration process has started...");
   if (!req.body) return res.sendStatus(400);
   var registerInfo = req.body;
-  res.sendStatus(200).send(req.body);
-  console.log(registerInfo);
+
+  admin.auth().createUser({
+      uid: registerInfo.uuid,
+      email: registerInfo.email,
+      password: registerInfo.password,
+      displayName: registerInfo.fName + " " + registerInfo.lName
+    })
+    .then(function(userRecord) {
+      // See the UserRecord reference doc for the contents of userRecord.
+      console.log("Successfully created new user:", userRecord.displayName);
+    })
+    .catch(function(error) {
+      console.log("Error creating new user:", error);
+    });
+
+  res.sendStatus(200).send(req.body);  
 });
 
 //POST request handler for login button
 app.post("/login", jsonParser, function(req, res) {
-  console.log("inside login route");
+  console.log("Login is being validated in the server...");
   if (!req.body) return res.sendStatus(400);
   var loginInfo = req.body;
+
+  admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      var displayName = decodedToken.displayName;
+    })
+    .catch(function(error) {
+      console.log("Could not resolve Login ID Token from Client!");
+    });
+
   res.sendStatus(200).send(req.body);
-  console.log(loginInfo);
 });
 
 //POST request handler for storing requests
@@ -197,11 +236,19 @@ app.post("/createprofile", jsonParser, function(req, res) {
     } 
 
     else{
+        var uid;
+        var displayName;
 
-        //get profile id from auth token
+        admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
+            uid = decodedToken.uid;
+            displayName = decodedToken.displayName;
+        })
+        .catch(function(error) {
+            console.log("Could not resolve Login ID Token from Client!");
+        });
 
         var profile = new Profile({
-            profileId: "auth token extract id",
+            profileId: uid,
             profileName: req.body.profileName,
             mobileNo: req.body.mobileNo,
             dateOfBirth:  req.body.dateOfBirth,
@@ -221,13 +268,12 @@ app.post("/createprofile", jsonParser, function(req, res) {
             }
         });
         
-        User.findOne({fName: 'Raneesh'}).then(function(record) {
+        User.findOne({profileId: uid}).then(function(record) {
             record.profiles.push(profile);
             record.save();
-        });
-
-        res.sendStatus(200).send(req.body);
-        // console.log(loginInfo);
+            console.log("profile saved successfully");
+            res.sendStatus(200).send("success");  
+        });        
     }
 });
 
