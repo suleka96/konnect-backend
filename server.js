@@ -31,17 +31,6 @@ admin.initializeApp({
 
 /*
 ******************************************************* 
-* SET PORT
-*******************************************************
-*/
-
-const PORT = process.env.PORT || 5000; //Port is assigned at runtime by Heroku or 5000 by default
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-/*******************************************************************************************************************************/
-
-/*
-******************************************************* 
 * DEFINE PATHS
 *******************************************************
 */
@@ -50,6 +39,17 @@ app.use(express.static(path.join(__dirname, "public"))); //Define path for stati
 app.set("views", path.join(__dirname, "views")); //Define path for views
 app.set("view engine", "ejs"); //Define view engine as EJS
 app.use(cors());
+
+/*******************************************************************************************************************************/
+
+/*
+******************************************************* 
+* SET PORT
+*******************************************************
+*/
+
+const PORT = process.env.PORT || 5000; //Port is assigned at runtime by Heroku or 5000 by default
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 /*******************************************************************************************************************************/
 
@@ -180,9 +180,7 @@ app.get("/", (req, res) => res.render("pages/index"));
 
 //Test POST request handler
 app.post("/test", jsonParser, function(req, res) {
-    console.log("Test route...");
-    if (!req.body) return res.sendStatus(400);
-    res.sendStatus(200).send(req.body);  
+    res.send("Got your message, Dillon!")
     console.log(req.body);
 });
 
