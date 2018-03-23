@@ -210,10 +210,10 @@ app.post("/register", jsonParser, function(req, res) {
   var registerInfo = req.body;
 
   admin.auth().createUser({
-      uid: "",
-      email: "",
-      password: "",
-      displayName: ""
+      uid: registerInfo.uuid,
+      email: registerInfo.email,
+      password: registerInfo.password,
+      displayName: registerInfo.fName + " " + registerInfo.lName
     })
     .then(function(userRecord) {
       // See the UserRecord reference doc for the contents of userRecord.
@@ -223,8 +223,7 @@ app.post("/register", jsonParser, function(req, res) {
       console.log("Error creating new user:", error);
     });
 
-  res.sendStatus(200).send(req.body);
-  console.log(registerInfo);
+  res.sendStatus(200).send(req.body);  
 });
 
 //POST request handler for login button
