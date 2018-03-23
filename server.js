@@ -96,13 +96,17 @@ var profilesSchema = new Schema({
 });
 
 var requestsSchema = new Schema({
-  requesterUserId: String,
-  receivedProfileId: String
+  requesterUserId: String 
+});
+
+var connectedUsersSchema = new Schema({
+    connectedUserId: String,
+    sharedProfiles: {type : Array , "default" : []}
 });
 
 var receivedProfilesSchema = new Schema({
-  receivedProfileId: String,
-  connectionId: String //connectionId is the requesterId but after the connection has been approved by the user.
+    connectionId: String, //Requesters ID
+    receivedProfileId: {type : Array , "default" : []}  
 });
 
 var usersSchema = new Schema({
@@ -113,16 +117,15 @@ var usersSchema = new Schema({
   profilePic: String,
   profiles: [profilesSchema],
   requests: [requestsSchema],
+  connectedUsers: [connectedUsersSchema],
   receivedProfiles: [receivedProfilesSchema]
-});j
+});
 
 var Profile = mongoose.model("profiles", profilesSchema);
 var Request = mongoose.model("requests", requestsSchema);
-var ReceivedProfile = mongoose.model(
-  "receivedProfiles",
-  receivedProfilesSchema
-);
+var ReceivedProfile = mongoose.model("receivedProfiles", receivedProfilesSchema);
 var User = mongoose.model("users", usersSchema);
+var ConnectedUsers = mongoose.model("connectedUsers", connectedUsersSchema);
 
 //var user1 = new User({
 //   userId: "konnect123",
@@ -158,7 +161,6 @@ var User = mongoose.model("users", usersSchema);
 //     designation: "companist"
 //   }
 // });
-
 
 /*******************************************************************************************************************************/
 
