@@ -125,6 +125,7 @@ var Profile = mongoose.model("profiles", profilesSchema);
 var Request = mongoose.model("requests", requestsSchema);
 var ReceivedProfile = mongoose.model("receivedProfiles", receivedProfilesSchema);
 var User = mongoose.model("users", usersSchema);
+var ConnectedUsers = mongoose.model("connectedUsers", connectedUsersSchema);
 
 //var user1 = new User({
 //   userId: "konnect123",
@@ -237,11 +238,19 @@ app.post("/createprofile", jsonParser, function(req, res) {
     } 
 
     else{
+        var uid;
+        var displayName;
 
-        //get profile id from auth token
+        admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
+            uid = decodedToken.uid;
+            displayName = decodedToken.displayName;
+        })
+        .catch(function(error) {
+            console.log("Could not resolve Login ID Token from Client!");
+        });
 
         var profile = new Profile({
-            profileId: "auth token extract id",
+            profileId: uid,
             profileName: req.body.profileName,
             mobileNo: req.body.mobileNo,
             dateOfBirth:  req.body.dateOfBirth,
@@ -261,13 +270,12 @@ app.post("/createprofile", jsonParser, function(req, res) {
             }
         });
         
-        User.findOne({fName: 'Raneesh'}).then(function(record) {
+        User.findOne({profileId: uid}).then(function(record) {
             record.profiles.push(profile);
             record.save();
-        });
-
-        res.sendStatus(200).send(req.body);
-        // console.log(loginInfo);
+            console.log("profile saved successfully");
+            res.sendStatus(200).send("success");  
+        });        
     }
 });
 
