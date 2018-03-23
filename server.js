@@ -207,23 +207,24 @@ app.post("/login", jsonParser, function(req, res) {
   if (!req.body) return res.sendStatus(400);
   var loginInfo = req.body;
 
-  admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      var displayName = decodedToken.displayName;
-    })
-    .catch(function(error) {
-      console.log("Could not resolve Login ID Token from Client!");
-    });
+//   admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
+//       var uid = decodedToken.uid;
+//       var displayName = decodedToken.displayName;
+//     })
+//     .catch(function(error) {
+//       console.log("Could not resolve Login ID Token from Client!");
+//     });
 
-  res.sendStatus(200).send(req.body);
+  res.sendStatus(200).send(loginInfo);
 });
 
 //POST request handler for storing requests
 app.post("/storeRequest", jsonParser, function(req, res) {
-    console.log("inside login route");
+    console.log("Storing requests...");
     if (!req.body) return res.sendStatus(400);
     var loginInfo = req.body;
-    res.sendStatus(200).send(req.body);
+    res.sendStatus(200);
+    res.send(req.body);
     console.log(loginInfo);
   });
 
