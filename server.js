@@ -219,7 +219,7 @@ app.post("/login", function(req, res) {
   var uid;
   var displayName;
 
-  admin.auth().verifyIdToken(token).then(function(decodedToken) {
+  admin.auth().verifyIdToken(req.body).then(function(decodedToken) {
       uid = decodedToken.uid;
       displayName = decodedToken.displayName;
     })
