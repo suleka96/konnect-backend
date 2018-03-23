@@ -214,8 +214,7 @@ app.post("/register", function(req, res) {
 //POST request handler for login button
 app.post("/login", function(req, res) {
   console.log("Login is being validated in the server...");
-  if (!req.body) return res.sendStatus(400);
-  var loginInfo = req.body;
+  if (!req.body) return res.sendStatus(400); 
 
 //   admin.auth().verifyIdToken(req.body.token).then(function(decodedToken) {
 //       var uid = decodedToken.uid;
@@ -225,7 +224,7 @@ app.post("/login", function(req, res) {
 //       console.log("Could not resolve Login ID Token from Client!");
 //   });
 
-  console.log(loginInfo);
+  console.log(req.body.uid);
   res.json("Hello!");
 });
 
