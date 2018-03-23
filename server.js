@@ -178,6 +178,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 //GET request handler for index route
 app.get("/", (req, res) => res.render("pages/index"));
 
+//Test POST request handler
+app.post("/test", jsonParser, function(req, res) {
+    console.log("Test route...");
+    if (!req.body) return res.sendStatus(400);
+    res.sendStatus(200).send(req.body);  
+    console.log(req.body);
+});
+
 //POST request handler for register route
 app.post("/register", jsonParser, function(req, res) {
   console.log("Registration process has started...");
