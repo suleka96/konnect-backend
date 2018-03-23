@@ -169,18 +169,15 @@ var ConnectedUsers = mongoose.model("connectedUsers", connectedUsersSchema);
 *******************************************************
 */
 
-//Create application/json parser
-var jsonParser = bodyParser.json();
-
-//Create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
 
 //GET request handler for index route
 app.get("/", (req, res) => res.render("pages/index"));
 
 //Test POST request handler
 app.post("/test", jsonParser, function(req, res) {
-    res.send("Got your message, Dillon!")
+    res.json("Got your message, Dillon!")
     console.log(req.body);
 });
 
