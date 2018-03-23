@@ -217,7 +217,7 @@ app.post("/login", function(req, res) {
   if (!req.body) return res.sendStatus(400);
   //var loginInfo = req.body;
 
-  admin.auth().verifyIdToken(req.body.idToken).then(function(decodedToken) {
+  admin.auth().verifyIdToken(req.body.token).then(function(decodedToken) {
       var uid = decodedToken.uid;
       var displayName = decodedToken.displayName;
     })
