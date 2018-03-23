@@ -215,17 +215,18 @@ app.post("/register", function(req, res) {
 app.post("/login", function(req, res) {
   console.log("Login is being validated in the server...");
   if (!req.body) return res.sendStatus(400);
-  //var loginInfo = req.body;
+  var loginInfo = req.body;
 
-  admin.auth().verifyIdToken(req.body.token).then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      var displayName = decodedToken.displayName;
-    })
-    .catch(function(error) {
-      console.log("Could not resolve Login ID Token from Client!");
-  });
+//   admin.auth().verifyIdToken(req.body.token).then(function(decodedToken) {
+//       var uid = decodedToken.uid;
+//       var displayName = decodedToken.displayName;
+//     })
+//     .catch(function(error) {
+//       console.log("Could not resolve Login ID Token from Client!");
+//   });
 
-  res.json("Hello, " + displayName + "with UUID: " + uid);
+  console.log(loginInfo);
+  res.json("Hello!");
 });
 
 //POST request handler for storing requests
