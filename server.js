@@ -216,20 +216,19 @@ app.post("/login", function(req, res) {
   console.log("Login is being validated in the server...");
   if (!req.body) return res.sendStatus(400); 
 
-  var uid;
-  var displayName;
+  var uid = req.body.uid;
+  var displayName = req.body.displayName;
 
-  admin.auth().verifyIdToken(String(req.body.token)).then(function(decodedToken) {
-      uid = decodedToken.uid;
-      displayName = decodedToken.displayName;
-    })
-    .catch(function(error) {
-      console.log(error);
-      //console.log("Could not resolve Login ID Token from Client!");
-  });
+//   admin.auth().verifyIdToken(String(req.body.token)).then(function(decodedToken) {
+//       uid = decodedToken.uid;
+//       displayName = decodedToken.displayName;
+//     })
+//     .catch(function(error) {
+//       console.log(error);
+//       //console.log("Could not resolve Login ID Token from Client!");
+//   });
 
-  console.log(displayName);
-  res.json("Hello!");
+  res.json("Welcome, " + displayName + "!");  
 });
 
 //POST request handler for storing requests
