@@ -10,8 +10,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 const serviceAccount = require("./admin/konnect-ionic-auth-firebase-adminsdk-s951b-aabc7ba7c0.json");
-
-//var cors = require('cors');
+var cors = require('cors');
 
 /*******************************************************************************************************************************/
 
@@ -50,7 +49,7 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 app.use(express.static(path.join(__dirname, "public"))); //Define path for static assets
 app.set("views", path.join(__dirname, "views")); //Define path for views
 app.set("view engine", "ejs"); //Define view engine as EJS
-//app.use(cors());
+app.use(cors());
 
 /*******************************************************************************************************************************/
 
