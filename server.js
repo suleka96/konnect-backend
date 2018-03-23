@@ -176,13 +176,13 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.get("/", (req, res) => res.render("pages/index"));
 
 //Test POST request handler
-app.post("/test", jsonParser, function(req, res) {
+app.post("/test", function(req, res) {
     res.json("Got your message, Dillon!")
     console.log(req.body);
 });
 
 //POST request handler for register route
-app.post("/register", jsonParser, function(req, res) {
+app.post("/register", function(req, res) {
   console.log("Registration process has started...");
   if (!req.body) return res.sendStatus(400);
   var registerInfo = req.body;
@@ -205,7 +205,7 @@ app.post("/register", jsonParser, function(req, res) {
 });
 
 //POST request handler for login button
-app.post("/login", jsonParser, function(req, res) {
+app.post("/login", function(req, res) {
   console.log("Login is being validated in the server...");
   if (!req.body) return res.sendStatus(400);
   var loginInfo = req.body;
@@ -222,7 +222,7 @@ app.post("/login", jsonParser, function(req, res) {
 });
 
 //POST request handler for storing requests
-app.post("/storeRequest", jsonParser, function(req, res) {
+app.post("/storeRequest", function(req, res) {
     console.log("Storing requests...");
     if (!req.body) return res.sendStatus(400);
     var loginInfo = req.body;
@@ -233,7 +233,7 @@ app.post("/storeRequest", jsonParser, function(req, res) {
 
 
 //POST request handler for creating profiles
-app.post("/createprofile", jsonParser, function(req, res) {
+app.post("/createprofile", function(req, res) {
     console.log("inside createProfile route");
 
     if (!req.body){
@@ -283,7 +283,7 @@ app.post("/createprofile", jsonParser, function(req, res) {
 });
 
 //POST request handler for storing requests
-app.post("/storerequest", jsonParser, function(req, res) {
+app.post("/storerequest", function(req, res) {
     console.log("inside storeRequest route");
     if (!req.body) return res.sendStatus(400);
     var loginInfo = req.body;
