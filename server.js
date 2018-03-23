@@ -250,19 +250,9 @@ app.post("/createprofile", function(req, res) {
         return res.sendStatus(400);
     }
     else {
-        var uid;
-        var displayName;
-
-        admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
-            uid = decodedToken.uid;
-            displayName = decodedToken.displayName;
-        })
-        .catch(function(error) {
-            console.log("Could not resolve Login ID Token from Client!");
-        });
 
         var profile = new Profile({
-            profileId: uid,
+            profileId: req.body.profileId,
             profileName: req.body.profileName,
             mobileNo: req.body.mobileNo,
             dateOfBirth:  req.body.dateOfBirth,
@@ -286,7 +276,7 @@ app.post("/createprofile", function(req, res) {
             record.profiles.push(profile);
             record.save();
             console.log("profile saved successfully");
-            res.sendStatus(200).send("success");  
+            res.json("success");  
         });        
     }
 });
