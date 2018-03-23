@@ -215,9 +215,9 @@ app.post("/register", function(req, res) {
 app.post("/login", function(req, res) {
   console.log("Login is being validated in the server...");
   if (!req.body) return res.sendStatus(400);
-  var loginInfo = req.body;
+  //var loginInfo = req.body;
 
-  admin.auth().verifyIdToken(loginInfo.idToken).then(function(decodedToken) {
+  admin.auth().verifyIdToken(req.body.idToken).then(function(decodedToken) {
       var uid = decodedToken.uid;
       var displayName = decodedToken.displayName;
     })
